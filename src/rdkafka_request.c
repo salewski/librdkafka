@@ -1938,7 +1938,7 @@ rd_kafka_handle_idempotent_Produce_error (rd_kafka_broker_t *rkb,
                 last_err = rktp->rktp_last_err;
                 rd_kafka_toppar_unlock(rktp);
 
-                r = request->rkbuf_u.Produce.base_seq - perr->next_err_seq;
+                r = request->rkbuf_u.Produce.base_seq - perr->next_ack_seq;
 
                 if (r == 0) {
                         /* R1 failed:
