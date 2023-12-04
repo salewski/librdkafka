@@ -2224,7 +2224,7 @@ static void t_max_poll_interval_exceeded(int variation) {
     }
   }
 
-  if (variation == 1) {
+  if (variation == 1 || variation == 3) {
     if (rebalance_cb1.lost_call_cnt != 0)
       Test::Fail(
           tostr() << "Expected consumer 1 lost revoke count to be 0, not: "
@@ -2237,6 +2237,11 @@ static void t_max_poll_interval_exceeded(int variation) {
       Test::Fail(
           tostr() << "Expected consumer 1 lost revoke count to be 1, not: "
                   << rebalance_cb1.lost_call_cnt);
+  }
+
+  if (variation == 3) {
+    /* Last poll will cause a rejoin, wait that the rejoin happens. */
+    rd_sleep(5);
   }
 
   c1->close();
@@ -3202,7 +3207,7 @@ int main_0113_cooperative_rebalance(int argc, char **argv) {
   o_java_interop();
   for (i = 1; i <= 6; i++) /* iterate over 6 different test variations */
     s_subscribe_when_rebalancing(i);
-  for (i = 1; i <= 2; i++)
+  for (i = 1; i <= 3; i++)
     t_max_poll_interval_exceeded(i);
   /* Run all 2*3 variations of the u_.. test */
   for (i = 0; i < 3; i++) {
