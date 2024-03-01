@@ -171,6 +171,22 @@ void rd_kafka_metadata_destroy(const struct rd_kafka_metadata *metadata) {
         rd_free((void *)metadata);
 }
 
+void foo(rd_kafka_fetch_reply_tags_t* fetch_reply_tags){
+        rd_kafka_metadata_internal_t *mdi;
+        int i, j;
+        /* Lets populate rd_kafka_metadata_topic_internal_t *topics first */
+        int32_t TopicCnt = fetch_reply_tags->FetchTags->TopicCnt;
+        mdi->topics = rd_malloc(TopicCnt*sizeof(rd_kafka_metadata_topic_internal_t));
+        for(i=0; i < TopicCnt; i++){
+                mdi->topics[i].topic_id = fetch_reply_tags->FetchTags->TopicTags[i].TopicId;
+                int32_t PartitionCnt = fetch_reply_tags->FetchTags->TopicTags[i].PartitionCnt;
+                mdi->topics[i].partitions = rd_malloc(PartitionCnt*sizeof(rd_kafka_metadata_partition_internal_t));
+                for(j=0; j<PartitionCnt; j++){
+                        mdi->topics[i].partitions[j].id = fetch_reply_tags->FetchTags->TopicTags[i].PartitionTags->PartitionId;
+                        mdi->topics[i].partitions[j].leader_epoch = fetch_reply_tags->FetchTags->TopicTags[i].PartitionTags->CurrentLeader.LeaderEpoch;
+                }
+        }
+}
 
 static rd_kafka_metadata_internal_t *rd_kafka_metadata_copy_internal(
     const rd_kafka_metadata_internal_t *src_internal,

@@ -708,6 +708,43 @@ typedef struct rd_kafkap_NodeEndpoints_s {
         rd_kafkap_NodeEndpoint_t *NodeEndpoints;
 } rd_kafkap_NodeEndpoints_t;
 
+
+typedef struct rd_kafka_fetch_reply_PartitionTags_s {
+        int32_t PartitionId;
+        rd_kafkap_CurrentLeader_t CurrentLeader;
+} rd_kafka_fetch_reply_PartitionTags_t;
+
+typedef struct rd_kafka_fetch_reply_TopicTags_s {
+        int32_t PartitionCnt;
+        rd_kafka_Uuid_t TopicId;
+        rd_kafka_fetch_reply_PartitionTags_t* PartitionTags;
+} rd_kafka_fetch_reply_TopicTags_t;
+
+typedef struct rd_kafka_FetchTags_s {
+        int32_t TopicCnt;
+        rd_kafka_fetch_reply_TopicTags_t* TopicTags;    
+} rd_kafka_FetchTags_t;
+
+typedef struct rd_kafka_fetch_reply_tags_s {
+        rd_kafkap_NodeEndpoints_t* NodeEndpoints;
+        rd_kafka_FetchTags_t* FetchTags;
+} rd_kafka_fetch_reply_tags_t;
+
+rd_kafkap_NodeEndpoints_t* rd_kafkap_NodeEndpoints_new(int32_t size){
+        rd_kafkap_NodeEndpoints_t* NodeEndpoints;
+        rd_kafkap_NodeEndpoint_t NodeEndpoint;
+        NodeEndpoints->NodeEndpointCnt = size;
+        NodeEndpoints->NodeEndpoints = rd_malloc(size*sizeof(NodeEndpoint));
+        return NodeEndpoints;
+}
+
+rd_kafka_FetchTags_t* rd_kafka_FetchTags_new(int32_t size){
+        rd_kafka_FetchTags_t* FetchTags;
+        FetchTags->TopicCnt = size;
+        FetchTags->TopicTags = rd_malloc(size*sizeof(rd_kafka_fetch_reply_TopicTags_t));
+        return FetchTags;
+}
+
 /**@}*/
 
 
