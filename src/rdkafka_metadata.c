@@ -171,7 +171,7 @@ void rd_kafka_metadata_destroy(const struct rd_kafka_metadata *metadata) {
         rd_free((void *)metadata);
 }
 
-void foo(rd_kafka_fetch_reply_tags_t* fetch_reply_tags){
+rd_kafka_metadata_internal_t* foo(rd_kafka_fetch_reply_tags_t* fetch_reply_tags){
         int i, j;
         rd_kafka_metadata_internal_t *mdi = NULL;
         rd_kafka_metadata_t *md           = NULL;
