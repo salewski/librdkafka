@@ -690,7 +690,6 @@ rd_kafka_pid_bump(const rd_kafka_pid_t old) {
  * @{
  *
  */
-
 typedef struct rd_kafkap_CurrentLeader_s {
         int32_t LeaderId;
         int32_t LeaderEpoch;
@@ -716,6 +715,7 @@ typedef struct rd_kafka_fetch_reply_PartitionTags_s {
 
 typedef struct rd_kafka_fetch_reply_TopicTags_s {
         int32_t PartitionCnt;
+        char *TopicName;
         rd_kafka_Uuid_t TopicId;
         rd_kafka_fetch_reply_PartitionTags_t* PartitionTags;
 } rd_kafka_fetch_reply_TopicTags_t;

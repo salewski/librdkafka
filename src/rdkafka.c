@@ -4004,6 +4004,8 @@ rd_kafka_op_res_t rd_kafka_poll_cb(rd_kafka_t *rk,
                 break;
 
         case RD_KAFKA_OP_METADATA_951:
+                /* TODO: Callback to merge metadata rko_u.metadata.mdi and
+                 * update cache. Phase 5 */
                 break;
 
         default:
