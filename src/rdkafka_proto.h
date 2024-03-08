@@ -730,14 +730,14 @@ typedef struct rd_kafka_fetch_reply_tags_s {
         rd_kafka_FetchTags_t* FetchTags;
 } rd_kafka_fetch_reply_tags_t;
 
-rd_kafkap_NodeEndpoints_t* rd_kafkap_NodeEndpoints_new(int32_t size){
+static RD_UNUSED rd_kafkap_NodeEndpoints_t* rd_kafkap_NodeEndpoints_new(int32_t size){
         rd_kafkap_NodeEndpoints_t* NodeEndpoints = rd_malloc(sizeof(rd_kafkap_NodeEndpoints_t));
         NodeEndpoints->NodeEndpoints = rd_malloc(size*sizeof(rd_kafkap_NodeEndpoint_t));
         NodeEndpoints->NodeEndpointCnt = size;
         return NodeEndpoints;
 }
 
-rd_kafka_FetchTags_t* rd_kafka_FetchTags_new(int32_t size){
+static RD_UNUSED rd_kafka_FetchTags_t* rd_kafka_FetchTags_new(int32_t size){
         rd_kafka_FetchTags_t* FetchTags = rd_malloc(sizeof(rd_kafka_FetchTags_t));
         FetchTags->TopicCnt = size;
         FetchTags->TopicTags = rd_malloc(size*sizeof(rd_kafka_fetch_reply_TopicTags_t));
